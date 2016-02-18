@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import csv
+import argparse
+
+import sqlalchemy
+
+from bioalchemy import gtf
+
+
+def main(args):
+    print(args)
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description='GTF to SQL database converter.',
+    )
+
+    args = parser.parse_args()
+
+    main(args)
