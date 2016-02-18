@@ -19,6 +19,12 @@ class GTF(Base):
     General Transfer Format representation.
     '''
     __tablename__ = 'gtfs'
+    __table_args__ = (
+        CheckConstraint('frame >= 0'),
+        CheckConstraint('frame <= 2'),
+        CheckConstraint('start >= 0'),
+        CheckConstraint('stop >= start'),
+    )
 
     _id = Column(Integer, primary_key=True)
     sequence = Column(Integer, ForeignKey('gtf_sequences._id'))
@@ -29,13 +35,8 @@ class GTF(Base):
     frame = Column(SmallInteger)
     score = Column(Float)
     start = Column(Integer)
-    end = Column(Integer)
+    stop = Column(Integer)
 
-    frame_constraint_0 = CheckConstraint('frame >= 0')
-    frame_constraint_1 = CheckConstraint('frame <= 2')
-
-    start_constraint = CheckConstraint('start >= 0')
-    end_constraint = CheckConstraint('end >= start')
 
     attributes = relationship('GTFAttribute',
         backref=__tablename__,
@@ -76,5 +77,5 @@ class GTFAttribute(Base):
     __tablename__ = 'gtf_attributes'
 
     gtf = Column(Integer, ForeignKey('gtfs._id'), primary_key=True)
-    key = Column(String, primary_key=True)
+    att = Column(String, primary_key=True)
     val = Column(String, primary_key=True)
